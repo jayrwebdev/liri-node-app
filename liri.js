@@ -1,8 +1,8 @@
 require("dotenv").config();
 
 //var keys = require("./keys.js");
-var spotify = new Spotify(keys.spotify);
-//var axios = require("axios");
+//var spotify = new Spotify(keys.spotify);
+var axios = require("axios");
 var fs = require("fs")
 
 var feature = process.argv[2];
@@ -17,6 +17,7 @@ function consumerInput(feature,input) {
         console.log(input)
         getSongInfo(input)
     } else if (feature == "movie-this") {
+        getMovieInfo(input)
         console.log(input)
     } else if (feature == "do-what-it-says") {
         console.log(input)
@@ -43,6 +44,13 @@ function getSongInfo(input){
         }
     )
 
+}
+
+function getMovieInfo(input) {
+    axios.get("http://www.omdbapi.com/?t="+ input + "&apikey=5d2a7568")
+    .then(response => console.log(response.data) 
+      
+    )
 }
 
    
