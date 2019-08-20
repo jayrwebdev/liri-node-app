@@ -1,25 +1,28 @@
 require("dotenv").config();
 
 var keys = require("./keys.js");
+var moment = require("moment")
 console.log(keys)
 var Spotify = require("node-spotify-api")
 var spotify = new Spotify(keys.spotify);
 var axios = require("axios");
 var fs = require("fs")
 var feature = process.argv[2];
-var input = process.argv[3];
+var input = process.argv.slice(3).join(" ");
 
 consumerInput(feature, input)
 function consumerInput(feature, input) {
     if (feature == "concert-this") {
-        console.log(feature + " " + input)
+        console.log("Loading Info")
+        getConcert(input)
     } else if (feature == "spotify-this-song") {
-        console.log(input)
+        console.log("Loading Info")
         getSongInfo(input)
     } else if (feature == "movie-this") {
+        console.log("Loading Info")
         getMovieInfo(input)
-        console.log(input)
     } else if (feature == "do-what-it-says") {
+        console.log("Loading Info")
         console.log(input)
     }
 }
@@ -31,10 +34,28 @@ function getSongInfo(input) {
             query: input,
         },
         function (error, response) {
-            console.log(response)
+            //console.log(response)
+            var song = response.tracks
+            console.log(song.items[0].artist.name)
+
+            if (error) {
+                console.log("there was an error", error)
+            } else {
+                // fs.appendFile("random.txt","********************\n")
+                // console.log("********************/n")
+                // fs.appendFile("random.txt","Song name: " +song[0].name +"\n")
+                // console.log(song[0].name)
+                // fs.appendFile("random.txt","Song preview "+song[0].preview_url +"\n")
+                // console.log("Song preview "+song[0].preview_url)
+                // fs.appendFile("random.txt","Album: "+song[0].album.name +"\n")
+                // console.log("Album: "+song[0].album.name)
+                // fs.appendFile("random.txt","Artist: "+song[0].artist.name +"\n")
+                // console.log("Artist: "+song[0].artist.name)
+                // fs.appendFile("random.txt","********************\n")
+                // console.log("********************/n")
+            }
         }
     )
-
 }
 
 function getMovieInfo(input) {
@@ -126,3 +147,20 @@ function getMovieInfo(input) {
 
 }
 
+function getConcert(input) {
+    
+    axios.get("https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp")
+    
+    .then(function(response){
+
+            var concert = response.data 
+
+             for (var i = 0 ; i <concert.length; i++) {
+                console.log("**********INFO**********")
+                console.log("Name: " + concert[i].venue.name)
+                console.log("Venue: " + concert[i].venue.city)
+                console.log("Date: " + moment(concert[i].venue.datetime).format("MM/DD/YYYY"))
+                console.log("********************")
+             }
+    })
+}
