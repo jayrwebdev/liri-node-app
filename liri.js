@@ -33,26 +33,19 @@ function getSongInfo(input) {
             type: "track",
             query: input,
         },
-        function (error, response) {
-            //console.log(response)
-            var song = response.tracks
-            console.log(song.items[0].artist.name)
+        function (error, data) {
+            var song = data.tracks.items
 
             if (error) {
                 console.log("there was an error", error)
             } else {
-                // fs.appendFile("random.txt","********************\n")
-                // console.log("********************/n")
-                // fs.appendFile("random.txt","Song name: " +song[0].name +"\n")
-                // console.log(song[0].name)
-                // fs.appendFile("random.txt","Song preview "+song[0].preview_url +"\n")
-                // console.log("Song preview "+song[0].preview_url)
-                // fs.appendFile("random.txt","Album: "+song[0].album.name +"\n")
-                // console.log("Album: "+song[0].album.name)
-                // fs.appendFile("random.txt","Artist: "+song[0].artist.name +"\n")
-                // console.log("Artist: "+song[0].artist.name)
-                // fs.appendFile("random.txt","********************\n")
-                // console.log("********************/n")
+                //console.log(song)
+                console.log("**********INFO**********")
+                console.log("Song name: " + song[0].name)
+                console.log("Artist: " + song[0].artists[0].name)
+                
+
+                
             }
         }
     )
@@ -148,19 +141,19 @@ function getMovieInfo(input) {
 }
 
 function getConcert(input) {
-    
+
     axios.get("https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp")
-    
-    .then(function(response){
 
-            var concert = response.data 
+        .then(function (response) {
 
-             for (var i = 0 ; i <concert.length; i++) {
+            var concert = response.data
+
+            for (var i = 0; i < concert.length; i++) {
                 console.log("**********INFO**********")
                 console.log("Name: " + concert[i].venue.name)
                 console.log("Venue: " + concert[i].venue.city)
                 console.log("Date: " + moment(concert[i].venue.datetime).format("MM/DD/YYYY"))
                 console.log("********************")
-             }
-    })
+            }
+        })
 }
