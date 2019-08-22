@@ -14,8 +14,28 @@ This application uses node to request information from npms to display in the co
 
 USEFULNESS
 -------------------------------------------
+The project is useful for gathering info for future endeavors or activities that pertains to music, movies,and concerts.
 
-The project is useful for gathering info for future endeavors or activities.
-
-USEFULNESS
+HOW TO GET STARTED
 -------------------------------------------
+Individuals can get started with this by project by downloading the files,and installing the npm's used.
+
+HOW USERS CAN HELP
+-------------------------------------------
+Users can help with the application with any improvements that they see fit.
+
+Maintain & Contribute
+-------------------------------------------
+I myslef maintans & contributed for this application.
+
+NPM
+-------------------------------------------
+* Axios
+* Moment
+* fs
+* node-spotify-api
+
+API
+-------------------------------------------
+* OMDB
+* Bandsintown
