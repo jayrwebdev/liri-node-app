@@ -23,7 +23,7 @@ function consumerInput(feature, input) {
         getMovieInfo(input)
     } else if (feature == "do-what-it-says") {
         console.log("Loading Info")
-        console.log(input)
+        doWhatItSays()
     }
 }
 
@@ -34,20 +34,22 @@ function getSongInfo(input) {
             query: input,
         },
         function (error, data) {
+            if (data.tracks) {
             var song = data.tracks.items
 
             if (error) {
                 console.log("there was an error", error)
             } else {
-                //console.log(song)
+                // console.log(song)
                 console.log("**********INFO**********")
                 console.log("Song name: " + song[0].name)
                 console.log("Artist: " + song[0].artists[0].name)
-                
-
-                
+                console.log("Link: " + song[0].external_urls.spotify)
+                console.log("Album: " +song[0].album.name)
+                console.log("************************")           
             }
         }
+    }
     )
 }
 
@@ -56,7 +58,7 @@ function getMovieInfo(input) {
         .then(function (response) {
             var movie = response
             var movies = movie.data
-            fs.appendFile("random.txt", "******************************", function (error) {
+            fs.appendFile("log.txt", "******************************", function (error) {
                 if (error) {
                     console.log("Ooooopsie there was a problem")
                 } else {
@@ -64,7 +66,7 @@ function getMovieInfo(input) {
                 }
             })
             console.log("******************************")
-            fs.appendFile("random.txt", " " + movies.Title + " ", function (error) {
+            fs.appendFile("log.txt", " " + movies.Title + " ", function (error) {
                 if (error) {
                     console.log("Ooooopsie there was a problem")
                 } else {
@@ -72,7 +74,7 @@ function getMovieInfo(input) {
                 }
             })
             console.log(movies.Title)
-            fs.appendFile("random.txt", " " + movies.Year + " ", function (error) {
+            fs.appendFile("log.txt", " " + movies.Year + " ", function (error) {
                 if (error) {
                     console.log("Ooooopsie there was a problem")
                 } else {
@@ -80,7 +82,7 @@ function getMovieInfo(input) {
                 }
             })
             console.log(movies.Year)
-            fs.appendFile("random.txt", " " + movies.imdbRating + " ", function (error) {
+            fs.appendFile("log.txt", " " + movies.imdbRating + " ", function (error) {
                 if (error) {
                     console.log("Ooooopsie there was a problem")
                 } else {
@@ -88,7 +90,7 @@ function getMovieInfo(input) {
                 }
             })
             console.log(movies.imdbRating)
-            fs.appendFile("random.txt", " " + movies.Ratings[1].Value + " ", function (error) {
+            fs.appendFile("log.txt", " " + movies.Ratings[1].Value + " ", function (error) {
                 if (error) {
                     console.log("Ooooopsie there was a problem")
                 } else {
@@ -96,7 +98,7 @@ function getMovieInfo(input) {
                 }
             })
             console.log(movies.Ratings[1].Value)
-            fs.appendFile("random.txt", " " + movies.Country + " ", function (error) {
+            fs.appendFile("log.txt", " " + movies.Country + " ", function (error) {
                 if (error) {
                     console.log("Ooooopsie there was a problem")
                 } else {
@@ -104,7 +106,7 @@ function getMovieInfo(input) {
                 }
             })
             console.log(movies.Country)
-            fs.appendFile("random.txt", " " + movies.Language + " ", function (error) {
+            fs.appendFile("log.txt", " " + movies.Language + " ", function (error) {
                 if (error) {
                     console.log("Ooooopsie there was a problem")
                 } else {
@@ -112,7 +114,7 @@ function getMovieInfo(input) {
                 }
             })
             console.log(movies.Language)
-            fs.appendFile("random.txt", " " + movies.Plot + " ", function (error) {
+            fs.appendFile("log.txt", " " + movies.Plot + " ", function (error) {
                 if (error) {
                     console.log("Ooooopsie there was a problem")
                 } else {
@@ -120,7 +122,7 @@ function getMovieInfo(input) {
                 }
             })
             console.log(movies.Plot)
-            fs.appendFile("random.txt", " " + movies.Actors + " ", function (error) {
+            fs.appendFile("log.txt", " " + movies.Actors + " ", function (error) {
                 if (error) {
                     console.log("Ooooopsie there was a problem")
                 } else {
@@ -128,7 +130,7 @@ function getMovieInfo(input) {
                 }
             })
             console.log(movies.Actors)
-            fs.appendFile("random.txt", "******************************", function (error) {
+            fs.appendFile("log.txt", "******************************", function (error) {
                 if (error) {
                     console.log("Ooooopsie there was a problem")
                 } else {
@@ -156,4 +158,16 @@ function getConcert(input) {
                 console.log("********************")
             }
         })
+}
+
+function doWhatItSays() {
+     fs.readFile('random.txt',"utf-8",function(error,data){
+         if (error) {
+             console.log("there was a error",error)
+         } else {
+             var print = data.split(",")
+             getSongInfo(print[1])
+         }
+        
+     })
 }
